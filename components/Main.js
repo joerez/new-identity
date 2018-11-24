@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+import { Identities } from './utilities';
+
 // import NameGenerator from './NameGenerator';
 
 class Main extends React.Component {
@@ -26,7 +28,7 @@ class Main extends React.Component {
 
 
   handleTouch() {
-    let names = [{name: 'Jack Henny', age: 24}, {name: 'George Elliot', age: 19}]
+    let names = Identities
     let pickedName = names[Math.floor(Math.random() * names.length)]
     let person = this.compareNames(pickedName, this.state.name, names)
 
@@ -47,11 +49,23 @@ class Main extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.handleTouch} style={styles.text}>
-          <Text>Generate New Identity</Text>
+          <Text style={{color: 'white'}}>Generate New Identity</Text>
         </TouchableOpacity>
 
+        <View style={styles.detailCon}>
+          <Text style={styles.renderedText}>Name: {this.state.name.name} {this.state.name.age}</Text>
+          <Text style={styles.renderedText}>Job: {this.state.name.job}</Text>
+          <Text style={styles.renderedText}> Purpose: {this.state.name.purpose}</Text>
+          <Text style={styles.renderedText}>Home Town: {this.state.name.homeTown}</Text>
+        </View>
 
-        <Text style={styles.renderedText}>{this.state.name.name} {this.state.name.age}</Text>
+        <Button
+          style={styles.share}
+          title="Share"
+          onPress={() => this.props.navigation.navigate('Details')}
+        />
+
+
       </View>
     );
   }
@@ -64,19 +78,44 @@ const styles = StyleSheet.create({
     backgroundColor: '#ecf0f1',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    textAlign: 'center',
+  },
+  detailCon: {
+    margin: 25,
+    paddingBottom: 50,
+    paddingLeft: 30,
+    paddingRight: 30,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    shadowOffset:{  width: 5,  height: 5,  },
+    shadowColor: 'black',
+    shadowOpacity: .3,
+    shadowRadius: 30,
+    textAlign: 'left',
   },
   text: {
-    color: '#2c3e50',
+    color: 'white',
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: '#2c3e50',
+    borderColor: 'white',
     borderRadius: 20,
     padding: 10,
     paddingLeft: 30,
     paddingRight: 30,
+    backgroundColor: '#8e44ad',
   },
   renderedText: {
     paddingTop: 50,
+    width: 300,
+    textAlign: 'left',
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  share: {
+    backgroundColor: '#3498db',
+    color: 'white',
+    borderRadius: 30,
   },
 });
 
